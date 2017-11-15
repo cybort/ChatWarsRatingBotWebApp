@@ -1,0 +1,69 @@
+<!doctype html>
+
+<html ng-app="chatWarsRatingBotWebApp">
+
+<head>	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Вебка для телеграм бота @ChatWarsRatingBot</title>
+	
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">	
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.2/angular.min.js"></script>	
+	<script src="js/controllers/main.js"></script>	
+	<script src="js/services/rating.js"></script>	
+	<script src="js/core.js"></script>	
+
+</head>
+
+<body ng-controller="mainController">
+	<div class="container">
+
+		<div class="jumbotron text-center">
+			<h2>Игроков в базе
+				<span class="label label-info">{{ ratings.length }}</span>
+			</h2>
+		</div>
+
+		<div class="row">
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Замок</th>
+						<th scope="col">Имя</th>
+						<th scope="col">Левел</th>
+						<th scope="col">Опыт</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="rating in ratings">
+						<th scope="row">{{ rating.position }}</th>
+						<td fraction-converter></td>
+						<td>{{ rating.name }}</td>
+						<td>{{ rating.level }}</td>
+						<td>{{ rating.xp }}</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<p class="text-center" ng-show="loading">
+				<span class="fa fa-spinner fa-spin fa-3x"></span>
+			</p>
+
+		</div>
+
+		<div class="jumbotron text-center">			
+			<h2>Ссылка на 
+				<a class="btn btn-primary btn-lg" target="_blank" href="https://telegram.me/ChatWarsRatingBot" role="button">бота</a>
+			</h2>
+		</div>
+
+	</div>
+
+</body>
+
+</html>
