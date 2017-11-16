@@ -2,7 +2,7 @@ angular.module('ratingController', [])
 
 	.controller('mainController', ['$scope', '$http', 'Rating', function ($scope, $http, Rating) {
 		$scope.loading = true;
-		$scope.fractions = ['red', 'blue', 'black', 'white', 'yellow', 'mint', 'twilight', 'deleted'];		
+		$scope.fractions = ['red', 'blue', 'black', 'white', 'yellow', 'mint', 'twilight', 'deleted'];				
 
 		// GET =====================================================================
 		Rating.get()
@@ -24,12 +24,12 @@ angular.module('ratingController', [])
 	.directive('fractionConverter', function () {
 		return {
 			link: function (scope, element, attrs) {
-				scope.image = '/img/deleted.png';
+				scope.image = 'deleted';
 				if (scope.rating != undefined) {
-					scope.image = '/img/' + scope.rating.fraction + '.png';
+					scope.image = scope.rating.fraction;
 				}
 				else if (scope.fraction != undefined) {
-					scope.image = '/img/' + scope.fraction + '.png';
+					scope.image = scope.fraction;
 				}
 			},
 			templateUrl: 'templates/image.html'
