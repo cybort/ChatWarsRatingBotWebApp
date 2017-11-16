@@ -4,6 +4,9 @@ angular.module('ratingService', [])
 		return {
 			get : function() {
 				return $http.get('/api/rating');
+			},
+			getByFraction : function(id) {							
+				return $http.get('/api/rating/' + id);
 			}
 		}
 	}]);

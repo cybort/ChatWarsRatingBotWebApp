@@ -2,27 +2,43 @@
 
 <html ng-app="chatWarsRatingBotWebApp">
 
-<head>	
+<head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<title>Вебка для телеграм бота @ChatWarsRatingBot</title>
-	
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">	
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.2/angular.min.js"></script>	
-	<script src="js/controllers/main.js"></script>	
-	<script src="js/services/rating.js"></script>	
-	<script src="js/core.js"></script>	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.2/angular.min.js"></script>
+	<script src="js/controllers/main.js"></script>
+	<script src="js/services/rating.js"></script>
+	<script src="js/core.js"></script>
 
 </head>
+
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<p class="navbar-brand" href="#">Топы по замкам</p>
+		</div>
+		<ul class="nav navbar-nav">
+			<li>
+				<a href="/">Все замки</a>
+			</li>
+			<li ng-repeat="fraction in fractions" >
+				<a href ng-click="getByFraction(fraction)" fraction-converter></a>
+			</li>
+		</ul>
+	</div>
+</nav>
 
 <body ng-controller="mainController">
 	<div class="container">
 
 		<div class="jumbotron text-center">
-			<h2>Игроков в базе
+
+			<h2>Игроков в топе
 				<span class="label label-info">{{ ratings.length }}</span>
 			</h2>
 		</div>
@@ -56,8 +72,8 @@
 
 		</div>
 
-		<div class="jumbotron text-center">			
-			<h2>Ссылка на 
+		<div class="jumbotron text-center">
+			<h2>Ссылка на
 				<a class="btn btn-primary btn-lg" target="_blank" href="https://telegram.me/ChatWarsRatingBot" role="button">бота</a>
 			</h2>
 		</div>
