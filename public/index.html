@@ -10,6 +10,7 @@
 	<title>Вебка для телеграм бота @ChatWarsRatingBot</title>
 
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
 
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.14/angular.js"></script>
@@ -37,7 +38,7 @@
 		<div class="navbar-form navbar-right">
 			<span>Показывать номер</span>
 			<div class="form-group">				
-				<button type="button" class="btn btn-info" ng-click="changePositionToogle()">{{ positionToogle ? 'в топе' : 'по порядку' }}</button>		
+				<button type="button" class="btn btn-info btn-position-toggle" ng-click="changePositionToogle()">{{ positionToogle ? 'в топе' : 'по порядку' }}</button>		
 			</div>
 		</div>
 	</div>
@@ -67,11 +68,11 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="rating in ratings">
-						<th scope="row">{{ positionToogle ? rating.position : $index + 1 }}</th>
-						<td fraction-converter></td>
-						<td>{{ rating.name }}</td>
-						<td>{{ rating.level }}</td>
-						<td>{{ rating.xp }}</td>
+						<td scope="row" class="col-md-1">{{ positionToogle ? rating.position : $index + 1 }}</td>
+						<td class="col-md-1" fraction-converter></td>
+						<td class="col-md-6">{{ rating.name }}</td>
+						<td class="col-md-1">{{ rating.level }}</td>
+						<td class="col-md-2">{{ rating.xp }}</td>
 					</tr>
 				</tbody>
 			</table>
