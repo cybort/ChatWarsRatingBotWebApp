@@ -1,12 +1,10 @@
 {
-  "name": "node-todo",
+  "name": "cw-rating-bot-web-app",
   "version": "0.0.1",
-  "description": "Simple todo application.",
+  "description": "Web app for @ChatWarsRatingBot",
   "main": "server.js",
-  "author": "Scotch",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "bootstrap": "^3.3.7",
     "express": "^4.10.8",
     "method-override": "^2.3.10",
     "mongoose": "4.10.8",

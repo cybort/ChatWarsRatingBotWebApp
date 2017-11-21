@@ -5,34 +5,41 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/x-icon" href="resources/img/favicon.ico" />
 
 	<title>Вебка для телеграм бота @ChatWarsRatingBot</title>
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.2/angular.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.14/angular.js"></script>
 
 	<script src="js/controllers/main.js"></script>
 	<script src="js/services/rating.js"></script>
 	<script src="js/core.js"></script>
 	<script src="js/utils/player.js"></script>
-
+     
 </head>
 
 <nav class="navbar navbar-default">
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<p class="navbar-brand" href="#">Топы по замкам</p>
-		</div>
+		</div>	
 		<ul class="nav navbar-nav">
 			<li>
 				<a href="/">Все замки</a>
 			</li>
-			<li ng-repeat="fraction in fractions" >
+			<li ng-repeat="fraction in fractions">
 				<a href ng-click="getByFraction(fraction)" fraction-converter></a>
 			</li>
 		</ul>
+		<div class="navbar-form navbar-right">
+			<span>Показывать номер</span>
+			<div class="form-group">				
+				<button type="button" class="btn btn-info" ng-click="changePositionToogle()">{{ positionToogle ? 'в топе' : 'по порядку' }}</button>		
+			</div>
+		</div>
 	</div>
 </nav>
 
@@ -60,7 +67,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="rating in ratings">
-						<th scope="row">{{ rating.position }}</th>
+						<th scope="row">{{ positionToogle ? rating.position : $index + 1 }}</th>
 						<td fraction-converter></td>
 						<td>{{ rating.name }}</td>
 						<td>{{ rating.level }}</td>
@@ -77,7 +84,7 @@
 
 		<div class="jumbotron text-center">
 			<h2>Ссылка на
-				<a class="btn btn-primary btn-lg" target="_blank" href="https://telegram.me/ChatWarsRatingBot" role="button">бота</a>
+				<a class="label label-info" target="_blank" href="https://telegram.me/ChatWarsRatingBot" role="button">бота</a>
 			</h2>
 		</div>
 
