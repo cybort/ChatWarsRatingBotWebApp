@@ -1,3 +1,7 @@
 .btn-position-toggle {
-    width: 100px !important;
+    width: 100px;
+}
+
+.head-label {
+    height: 180px;
 }

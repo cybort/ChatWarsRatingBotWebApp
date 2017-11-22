@@ -5,26 +5,34 @@ angular.module('ratingController', [])
 		$scope.positionToogle = true;
 		$scope.fractions = ['red', 'blue', 'black', 'white', 'yellow', 'mint', 'twilight', 'deleted'];
 
-		// GET =====================================================================
-		Rating.get()
-			.success(function (data) {
-				$scope.ratings = data;
-				$scope.loading = false;
-			});
+		$scope.ratings = getRatings();
 
 		$scope.getByFraction = function (id) {
-			$scope.loading = true;
-
-			Rating.getByFraction(id)
-				.success(function (data) {
-					$scope.loading = false;
-					$scope.ratings = data;
-				});
-		};
+			getRatings(id);
+		}
 
 		$scope.changePositionToogle = function () {
-			$scope.positionToogle = !$scope.positionToogle;			
+			$scope.positionToogle = !$scope.positionToogle;
 		};
+
+		function getRatings (id) {
+			$scope.loading = true;
+
+			if (id !== undefined) {
+				Rating.getByFraction(id)
+					.success(function (data) {
+						$scope.loading = false;
+						$scope.ratings = data;
+					});
+			}
+			else {
+				Rating.get()
+					.success(function (data) {
+						$scope.ratings = data;
+						$scope.loading = false;
+					});
+			}
+		};		
 	}])
 	.directive('fractionConverter', function () {
 		return {
@@ -39,4 +47,23 @@ angular.module('ratingController', [])
 			},
 			templateUrl: 'templates/image.html'
 		}
-	});
+	})
+	.directive('loading', ['$http', function ($http) {
+		return {
+			restrict: 'A',
+			link: function (scope, elm, attrs) {
+				scope.isLoading = function () {
+					return $http.pendingRequests.length > 0;
+				};
+
+				scope.$watch(scope.isLoading, function (v) {
+					if (v) {
+						elm.show();
+					} else {
+						elm.hide();
+					}
+				});
+			}
+		};
+
+	}]);

@@ -10,6 +10,7 @@
 	<title>Вебка для телеграм бота @ChatWarsRatingBot</title>
 
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
 
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -29,7 +30,7 @@
 		</div>	
 		<ul class="nav navbar-nav">
 			<li>
-				<a href="/">Все замки</a>
+				<a href ng-click="getByFraction()">Все замки</a>
 			</li>
 			<li ng-repeat="fraction in fractions">
 				<a href ng-click="getByFraction(fraction)" fraction-converter></a>
@@ -38,7 +39,8 @@
 		<div class="navbar-form navbar-right">
 			<span>Показывать номер</span>
 			<div class="form-group">				
-				<button type="button" class="btn btn-info btn-position-toggle" ng-click="changePositionToogle()">{{ positionToogle ? 'в топе' : 'по порядку' }}</button>		
+				<button type="button" class="btn btn-info btn-position-toggle" ng-show="positionToogle" ng-click="changePositionToogle()">в топе</button>
+				<button type="button" class="btn btn-info btn-position-toggle" ng-hide="positionToogle" ng-click="changePositionToogle()">по порядку</button>		
 			</div>
 		</div>
 	</div>
@@ -47,39 +49,39 @@
 <body ng-controller="mainController">
 	<div class="container">
 
-		<div class="jumbotron text-center">
+		<div class="jumbotron text-center head-label">
 
 			<h2>Игроков в топе
 				<span class="label label-info">{{ ratings.length }}</span>
 			</h2>
-		</div>
+			<p class="text-center" loading>
+				<span class="fa fa-spinner fa-spin fa-3x"></span>
+			</p>
+		</div>		
 
 		<div class="row">
 
 			<table class="table">
 				<thead>
 					<tr>
-						<th scope="col">#</th>
-						<th scope="col">Замок</th>
-						<th scope="col">Имя</th>
-						<th scope="col">Левел</th>
-						<th scope="col">Опыт</th>
+						<th scope="row" class="col-md-1">#</th>
+						<th scope="col" class="col-md-1">Замок</th>
+						<th scope="col" class="col-md-6">Имя</th>
+						<th scope="col" class="col-md-1">Левел</th>
+						<th scope="col" class="col-md-2">Опыт</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="rating in ratings">
-						<td scope="row" class="col-md-1">{{ positionToogle ? rating.position : $index + 1 }}</td>
-						<td class="col-md-1" fraction-converter></td>
-						<td class="col-md-6">{{ rating.name }}</td>
-						<td class="col-md-1">{{ rating.level }}</td>
-						<td class="col-md-2">{{ rating.xp }}</td>
+						<td ng-show="positionToogle">{{ rating.position }}</td>
+						<td ng-hide="positionToogle">{{ $index + 1 }}</td>
+						<td fraction-converter></td>
+						<td>{{ rating.name }}</td>
+						<td>{{ rating.level }}</td>
+						<td>{{ rating.xp }}</td>
 					</tr>
 				</tbody>
-			</table>
-
-			<p class="text-center" ng-show="loading">
-				<span class="fa fa-spinner fa-spin fa-3x"></span>
-			</p>
+			</table>		
 
 		</div>
 
