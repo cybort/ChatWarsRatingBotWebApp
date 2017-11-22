@@ -5,7 +5,7 @@ function getRating(res) {
         if (err) {
             res.send(err);
         }
-        res.json(rating.sort(compare));
+        res.json(addIndexField(rating.sort(compare)));
     });
 };
 
@@ -15,7 +15,7 @@ function getRatingByFraction(res, id) {
         if (err) {
             res.send(err);
         }
-        res.json(rating.sort(compare));
+        res.json(addIndexField(rating.sort(compare)));
     });
 };
 
@@ -26,6 +26,13 @@ function compare(a, b) {
         return 1;
     return 0;
 };
+
+function addIndexField(rating) {
+    for (var i = 0; i < rating.length; i++) {
+        rating[i].index = i + 1;        
+    }
+    return rating;
+}
 
 module.exports = function (app) {
 

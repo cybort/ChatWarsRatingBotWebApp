@@ -6,5 +6,6 @@ module.exports = mongoose.model('rating', {
     name: String,
     update_time: Date,
     fraction: String,
-    position: Number
+    position: Number,
+    index: Number
 }, 'rating');

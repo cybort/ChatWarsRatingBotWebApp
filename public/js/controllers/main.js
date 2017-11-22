@@ -1,11 +1,20 @@
-angular.module('ratingController', [])
+angular.module('ratingController', ['ui.bootstrap'])
 
 	.controller('mainController', ['$scope', '$http', 'Rating', function ($scope, $http, Rating) {
-		$scope.loading = true;
-		$scope.positionToogle = true;
 		$scope.fractions = ['red', 'blue', 'black', 'white', 'yellow', 'mint', 'twilight', 'deleted'];
+		$scope.pagingOptions = [ { 'name': 10, 'value': 10 }, { 'name': 50, 'value': 50 }, { 'name': 100, 'value': 100 }, { 'name': 200, 'value': 200 }, { 'name': 500, 'value': 500 } ];
+		$scope.positionToogle = true;
 
 		$scope.ratings = getRatings();
+
+		$scope.currentPage = 1;
+		$scope.itemsPerPage = $scope.pagingOptions[1].value;
+		$scope.maxSize = 5;
+
+		$scope.setItemsPerPage = function (num) {
+			$scope.itemsPerPage = num;
+			$scope.currentPage = 1;
+		}
 
 		$scope.getByFraction = function (id) {
 			getRatings(id);
@@ -13,57 +22,23 @@ angular.module('ratingController', [])
 
 		$scope.changePositionToogle = function () {
 			$scope.positionToogle = !$scope.positionToogle;
-		};
+		}
 
-		function getRatings (id) {
-			$scope.loading = true;
-
+		function getRatings(id) {
 			if (id !== undefined) {
 				Rating.getByFraction(id)
 					.success(function (data) {
-						$scope.loading = false;
 						$scope.ratings = data;
+						$scope.totalItems = $scope.ratings.length;
 					});
 			}
 			else {
 				Rating.get()
 					.success(function (data) {
 						$scope.ratings = data;
-						$scope.loading = false;
+						$scope.totalItems = $scope.ratings.length;
 					});
 			}
-		};		
-	}])
-	.directive('fractionConverter', function () {
-		return {
-			link: function (scope, element, attrs) {
-				scope.image = 'deleted';
-				if (scope.rating != undefined) {
-					scope.image = scope.rating.fraction;
-				}
-				else if (scope.fraction != undefined) {
-					scope.image = scope.fraction;
-				}
-			},
-			templateUrl: 'templates/image.html'
 		}
-	})
-	.directive('loading', ['$http', function ($http) {
-		return {
-			restrict: 'A',
-			link: function (scope, elm, attrs) {
-				scope.isLoading = function () {
-					return $http.pendingRequests.length > 0;
-				};
-
-				scope.$watch(scope.isLoading, function (v) {
-					if (v) {
-						elm.show();
-					} else {
-						elm.hide();
-					}
-				});
-			}
-		};
 
 	}]);

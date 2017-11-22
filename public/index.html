@@ -11,23 +11,30 @@
 
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
 
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.14/angular.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
 
 	<script src="js/controllers/main.js"></script>
 	<script src="js/services/rating.js"></script>
+	<script src="js/directives/fractionConverter.js"></script>
+	<script src="js/directives/loading.js"></script>
 	<script src="js/core.js"></script>
 	<script src="js/utils/player.js"></script>
-     
+
 </head>
 
 <nav class="navbar navbar-default">
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<p class="navbar-brand" href="#">Топы по замкам</p>
-		</div>	
+		</div>
 		<ul class="nav navbar-nav">
 			<li>
 				<a href ng-click="getByFraction()">Все замки</a>
@@ -38,9 +45,9 @@
 		</ul>
 		<div class="navbar-form navbar-right">
 			<span>Показывать номер</span>
-			<div class="form-group">				
+			<div class="form-group">
 				<button type="button" class="btn btn-info btn-position-toggle" ng-show="positionToogle" ng-click="changePositionToogle()">в топе</button>
-				<button type="button" class="btn btn-info btn-position-toggle" ng-hide="positionToogle" ng-click="changePositionToogle()">по порядку</button>		
+				<button type="button" class="btn btn-info btn-position-toggle" ng-hide="positionToogle" ng-click="changePositionToogle()">по порядку</button>
 			</div>
 		</div>
 	</div>
@@ -54,12 +61,20 @@
 			<h2>Игроков в топе
 				<span class="label label-info">{{ ratings.length }}</span>
 			</h2>
-			<p class="text-center" loading>
+			<p loading>
 				<span class="fa fa-spinner fa-spin fa-3x"></span>
 			</p>
-		</div>		
+		</div>
 
 		<div class="row">
+
+			<div class="form-group">
+				<label>Игроков на странице
+					<select class="selectpicker" ng-model="itemsPerPage" ng-change="setItemsPerPage(itemsPerPage)" required ng-options="option.value as option.name for option in pagingOptions"></select>
+				</label>
+				<pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" class="pagination-md" boundary-links="true"
+				 rotate="false" num-pages="numPages" items-per-page="itemsPerPage"></pagination>
+			</div>
 
 			<table class="table">
 				<thead>
@@ -72,16 +87,16 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="rating in ratings">
+					<tr ng-repeat="rating in ratings.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
 						<td ng-show="positionToogle">{{ rating.position }}</td>
-						<td ng-hide="positionToogle">{{ $index + 1 }}</td>
+						<td ng-hide="positionToogle">{{ rating.index }}</td>
 						<td fraction-converter></td>
 						<td>{{ rating.name }}</td>
 						<td>{{ rating.level }}</td>
 						<td>{{ rating.xp }}</td>
 					</tr>
 				</tbody>
-			</table>		
+			</table>
 
 		</div>
 

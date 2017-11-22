@@ -1,7 +1,22 @@
+.fraction-img {
+    height: 18px;
+    width: 18px;
+}
+
 .btn-position-toggle {
     width: 100px;
 }
 
 .head-label {
     height: 180px;
+}
+
+.form-group ul {
+    margin: 0;
+    float: right;
+}
+
+.form-group select {
+    width: auto;
+    vertical-align: middle;
 }
